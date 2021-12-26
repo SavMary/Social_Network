@@ -1,0 +1,16 @@
+.item{
+    color: honeydew;
+    padding: 40px;
+}
+.friendsItem a{
+    display: flex;
+}
+.photo img{
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+}
+a {
+    display:inline-block;
+}
+
