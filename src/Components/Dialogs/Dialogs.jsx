@@ -2,14 +2,18 @@ import React from 'react';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import s from './Dialogs.module.css';
+import { addMessageActionCreator, updateTextMessageCreator } from '../../state/dilogsReducer';
 const Dialogs = (props)=>{
     let dialogsElement=props.state.dialogsData.map(d=><DialogItem name={d.name} id={d.id}/>)
     let messagesElement = props.state.messageData.map(m=><Message message={m.message} id={m.id}/>)
-    let newMessageElement = React.createRef();
+    let newMessageBody = props.state.newMessageBody;
+
     let addMessage =()=>{
-        let text = newMessageElement.current.value;
-        props.addMessage(text);
-        newMessageElement.current.value='';
+        props.dispatch(addMessageActionCreator())
+    }
+    let onNewMessageChange=(e)=>{
+        let body = e.target.value
+        props.dispatch(updateTextMessageCreator(body))
     }
     return(
         <div className={s.dialogs}>
@@ -21,7 +25,7 @@ const Dialogs = (props)=>{
         </div>
         <div className={s.sendMessage}>
         <div>
-            <textarea ref={newMessageElement}></textarea>
+            <textarea value={newMessageBody} onChange={onNewMessageChange}></textarea>
         </div>
         <div>
            <button onClick={addMessage}>Send Message</button>

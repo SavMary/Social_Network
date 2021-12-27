@@ -1,4 +1,9 @@
-
+import profileReducer from './profileReducer';
+import dialogsReducer from './dilogsReducer';
+import sidebarReducer from './sidebarReducer';
+const ADD_POST = 'ADD-POST',
+    ADD_MESSAGE = 'ADD-MESSAGE',
+    UPDATE_TEXT_MESSAGE_CREATOR = 'UPDATE-TEXT-MESSAGE-CREATOR';
 let store={
      state:{
         profilePages:{
@@ -23,7 +28,8 @@ let store={
                 {id:3, message:"When will i see you?"},
                 {id:4, message:"I miss you"},
                 {id:5, message:"Yo!"},
-              ]
+              ],
+              newMessageBody:""
         },
         sidebar:{
             sidebarData:[
@@ -39,54 +45,15 @@ let store={
     callSubscriber (){
         console.log('state changed')
         },
-    addPost (text){
-        let newPost  ={
-            id:5,
-            message: text,
-            likesCount: 0
-        }
-        this.state.profilePages.postsData.push(newPost);
-        this.callSubscriber(this.state);
-    },
-    addMessage(text){
-        let newMessage={
-            id:6,
-            message: text
-        }
-        this.state.dialogsPages.messageData.push(newMessage);
-        this.callSubscriber(this.state);
-    },
     subscribe (observer){
         this.callSubscriber=observer;
     },
     dispatch(action){
-        if(action.type==='ADD-POST'){
-            let newPost  ={
-                id:5,
-                message: action.text,
-                likesCount: 0
-            }
-            this.state.profilePages.postsData.push(newPost);
-            this.callSubscriber();
-        }else if(action.type==='ADD-MESSAGE'){
-            let newMessage={
-                id:6,
-                message: action.text
-            }
-            this.state.dialogsPages.messageData.push(newMessage);
-            this.callSubscriber();
+        this.state.profilePages= profileReducer(this.state.profilePages, action)
+        this.state.dialogsPages= dialogsReducer(this.state.dialogsPages, action)
+        this.state.sidebar= sidebarReducer(this.state.sidebar, action)
+            this.callSubscriber(this.state);
         }
     }
-}
-export const addPostActionCreator=(text)=>{
-    return{
-        type: 'ADD-POST', 
-        text: text
-    }
-}
-
-    
-
-
 
 export default store;
