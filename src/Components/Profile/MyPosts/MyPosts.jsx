@@ -1,24 +1,30 @@
 import React from "react";
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {addPostActionCreator} from './../../../state/profileReducer';
+
 
 const MyPosts =(props)=>{
+  debugger;
     let postsElement=props.posts.map(p=><Post message={p.message} likesCount={p.likesCount}/>);
-    let newPostElement = React.createRef();
-    let addPost=()=>{
+     let newPostElement=React.createRef();
+    
+    let onAddPost=()=>{
+        
+        props.addPost();
+        // newPostElement.current.value='';
+    }
+    let onNewPostChange=()=>{
         let text = newPostElement.current.value;
-        props.dispatch(addPostActionCreator(text));
-        newPostElement.current.value='';
+         props.updateTextPostCreator(text)
     }
     return (
         <div className={s.myPosts}>
             <h3>My posts</h3>
             <div>
-            <textarea ref={newPostElement}></textarea>
+            <textarea value={props.newPostBody} onChange={onNewPostChange} ref={newPostElement}></textarea>
             </div>
            <div>
-           <button onClick={addPost}>Add Post</button>
+           <button onClick={onAddPost}>Add Post</button>
            </div>
            <div>
                {postsElement}

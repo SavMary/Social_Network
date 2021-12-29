@@ -1,9 +1,7 @@
 import profileReducer from './profileReducer';
-import dialogsReducer from './dilogsReducer';
+import dialogsReducer from './dialogsReducer';
 import sidebarReducer from './sidebarReducer';
-const ADD_POST = 'ADD-POST',
-    ADD_MESSAGE = 'ADD-MESSAGE',
-    UPDATE_TEXT_MESSAGE_CREATOR = 'UPDATE-TEXT-MESSAGE-CREATOR';
+
 let store={
      state:{
         profilePages:{
@@ -12,7 +10,8 @@ let store={
                 {id: 2, message:"Good afternoon", likesCount:9},
                 {id: 3, message:"The weather is good", likesCount:57},
                 {id: 4, message:"I like snow", likesCount:100}
-              ]
+              ],
+              newPostBody:""
         },
         dialogsPages:{
             dialogsData:[
@@ -39,7 +38,7 @@ let store={
             ]
         }
     },
-    getstate(){
+    getState(){
         return this.state
     },
     callSubscriber (){
