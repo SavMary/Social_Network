@@ -3,19 +3,23 @@ import store from './redux/redux-store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 
 
- export let renederTree =(state)=>{
+ export let renederTree =()=>{
   ReactDOM.render(
-    <React.StrictMode>
-      <App store={store} dispatch={store.dispatch.bind(store)} state={state}/>
-    </React.StrictMode> ,document.getElementById('root'));
+      <BrowserRouter>
+      <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>,document.getElementById('root'));
+      
 }
-renederTree(store.getState());
+renederTree();
 store.subscribe(()=>{
-  let state = store.getState()
-  renederTree(state)
+  renederTree()
 });
 
 

@@ -20,13 +20,16 @@ const ADD_MESSAGE = 'ADD-MESSAGE',
 const dialogsReducer =(state=initialState,action)=>{
     switch (action.type) {
         case ADD_MESSAGE:
-            let body=state.newMessageBody
-            state.newMessageBody=""
-            state.messageData.push({id:6, message: body});
-            return state;
+            return{
+                ...state,
+                newMessageBody: "",
+                messageData: [...state.messageData,{id:6, message: state.newMessageBody} ]
+            }
         case UPDATE_TEXT_MESSAGE_CREATOR:
-            state.newMessageBody =action.body;
-            return state;
+            return{
+                ...state,
+                newMessageBody: action.body
+            }
         default:
             return state;
     }
